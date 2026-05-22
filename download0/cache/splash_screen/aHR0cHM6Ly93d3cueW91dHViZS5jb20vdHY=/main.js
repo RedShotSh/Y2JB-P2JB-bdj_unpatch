@@ -23,7 +23,7 @@ function load_localscript(src) {
 
 let NETWORK_LOGGING = false;
 // Use setlogserver.js payload to change server url at runtime
-let LOG_SERVER = 'http://192.168.1.180:8080/log';
+let LOG_SERVER = 'http://192.168.2.9:8080/log';
 
 let _log_socket_fd = null;
 let _log_socket_buf = null;
@@ -932,7 +932,13 @@ function trigger() {
         // MAIN EXECUTION //
         ////////////////////
 
-        await load_localscript('remotejsloader.js');
+        if (is_jailbroken()) {
+            await log('Already jailbroken!');
+            send_notification("Already jailbroken!");
+            await load_localscript('remotejsloader.js');
+        } else {
+            await load_localscript('p2jb_bdjunpatch.js');
+        }
         
     } catch (e) {                
         await log('EXCEPTION: ' + e.message);

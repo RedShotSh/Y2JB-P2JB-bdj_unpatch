@@ -189,7 +189,7 @@ async function elf_loader() {
     try {
         check_jailbroken();
         
-        const elfldr_data_path = "/data/elfldr.elf";
+        const elfldr_data_path = "/data/elfldr_1320.elf";
         const elfldr_download0_path = "/mnt/sandbox/" + get_title_id() + "_000/download0/cache/splash_screen/aHR0cHM6Ly93d3cueW91dHViZS5jb20vdHY=/elfldr.elf";
         
         let existing_path = "";

@@ -5,7 +5,7 @@
         
     } else {
         // Change this to your server
-        LOG_SERVER = 'http://192.168.1.180:8080/log';
+        LOG_SERVER = 'http://192.168.2.9:8080/log';
         
         await log("Setting log server url to " + LOG_SERVER);    
         

@@ -129,7 +129,7 @@ const offset_9_05_to_9_60 = {
     PMAP_STORE_DMPDPI: null,
 };
 
-const offset_10_00_to_10_01 = {
+const offset_10_00_to_10_60 = {
     DATA_BASE: 0xCC0000n,
     DATA_SIZE: null,
     DATA_BASE_DYNAMIC: 0x10000n,
@@ -140,6 +140,53 @@ const offset_10_00_to_10_01 = {
     DATA_BASE_KERNEL_PMAP_STORE: 0x2CF0EF8n,
     DATA_BASE_DATA_CAVE: null,
     DATA_BASE_GVMSPACE: 0x2D52570n,
+    PMAP_STORE_PML4PML4I: null,
+    PMAP_STORE_DMPML4I: null,
+    PMAP_STORE_DMPDPI: null,
+};
+
+const offset_11_00_to_11_40 = {
+    DATA_BASE: null,
+    DATA_SIZE: null,
+    DATA_BASE_DYNAMIC: null,
+    DATA_BASE_TO_DYNAMIC: null,
+    DATA_BASE_ALLPROC: 0x2875D70n,
+    DATA_BASE_SECURITY_FLAGS: 0xD8C064n,
+    DATA_BASE_ROOTVNODE: 0x30B7510n,
+    DATA_BASE_KERNEL_PMAP_STORE: 0x2E04F18n,
+    DATA_BASE_DATA_CAVE: null,
+    DATA_BASE_GVMSPACE: 0x2E66570n,
+    PMAP_STORE_PML4PML4I: null,
+    PMAP_STORE_DMPML4I: null,
+    PMAP_STORE_DMPDPI: null,
+};
+
+const offset_12_00_to_12_70 = {
+    DATA_BASE: null,
+    DATA_SIZE: null,
+    DATA_BASE_DYNAMIC: null,
+    DATA_BASE_TO_DYNAMIC: null,
+    DATA_BASE_ALLPROC: 0x2885E00n,
+    DATA_BASE_SECURITY_FLAGS: 0xD83064n,
+    DATA_BASE_ROOTVNODE: 0x30D7510n,
+    DATA_BASE_KERNEL_PMAP_STORE: 0x2E1CFB8n,
+    DATA_BASE_DATA_CAVE: null,
+    DATA_BASE_GVMSPACE: 0x2E7E570n,
+    PMAP_STORE_PML4PML4I: null,
+    PMAP_STORE_DMPML4I: null,
+    PMAP_STORE_DMPDPI: null,
+};
+const offset_13_00_to_13_20 = {
+    DATA_BASE: null,
+    DATA_SIZE: null,
+    DATA_BASE_DYNAMIC: null,
+    DATA_BASE_TO_DYNAMIC: null,
+    DATA_BASE_ALLPROC: 0x28C5E00n,
+    DATA_BASE_SECURITY_FLAGS: 0xD99064n,
+    DATA_BASE_ROOTVNODE: 0x3133510n,
+    DATA_BASE_KERNEL_PMAP_STORE: 0x2E74FF8n,
+    DATA_BASE_DATA_CAVE: null,
+    DATA_BASE_GVMSPACE: 0x2ED6570n,
     PMAP_STORE_PML4PML4I: null,
     PMAP_STORE_DMPML4I: null,
     PMAP_STORE_DMPDPI: null,
@@ -174,8 +221,22 @@ const ps5_kernel_offset_list = {
     "9.20": offset_9_05_to_9_60,
     "9.40": offset_9_05_to_9_60,
     "9.60": offset_9_05_to_9_60,
-    "10.00": offset_10_00_to_10_01,
-    "10.01": offset_10_00_to_10_01,
+    "10.00": offset_10_00_to_10_60,
+    "10.01": offset_10_00_to_10_60,
+    "10.20": offset_10_00_to_10_60,
+    "10.40": offset_10_00_to_10_60,
+    "10.60": offset_10_00_to_10_60,
+    "11.00": offset_11_00_to_11_40,
+    "11.20": offset_11_00_to_11_40,
+    "11.40": offset_11_00_to_11_40,
+    "12.00": offset_12_00_to_12_70,
+    "12.02": offset_12_00_to_12_70,
+    "12.20": offset_12_00_to_12_70,
+    "12.40": offset_12_00_to_12_70,
+    "12.60": offset_12_00_to_12_70,
+    "12.70": offset_12_00_to_12_70,
+    "13.00": offset_13_00_to_13_20,
+    "13.20": offset_13_00_to_13_20,
 };
 
 let kernel_offset = null;
