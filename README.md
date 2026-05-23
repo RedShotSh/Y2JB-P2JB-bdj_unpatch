@@ -5,11 +5,11 @@ Based on [Gezine/Y2JB](https://github.com/Gezine/Y2JB), chained with [matem6/P2J
 ## Brief
 
 This is just for **simple + local (no network needed) + auto** unpatch bdj via Y2JB with P2JB.  
-If lucky, one time run (~50 minutes) would succeed and switch to BD-UN-JB for PS5 FW 10.20-12.00.
+If lucky, one time run (~50 minutes) would succeed and switch to BD-UN-JB for PS5 FW 10.20-12.00 disc edition.
 
 ## Requirements
 
-PS5 firmware version from 9.00 to 12.40.  
+PS5 firmware version from 9.00 to 12.40 disc edition.  
 But only from 10.20 to 12.00, it is reasonable to unpatch bdj. Because poopsloit only support upto 12.00 and Y2JB+Lapse works perfect upto 10.01.
 
 ### For Jailbroken PS5
