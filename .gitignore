@@ -1,0 +1,6 @@
+.git
+*.bak
+/payloads/ftp.js
+/download0.dat
+/create_download0_image.sh
+/*_elf
