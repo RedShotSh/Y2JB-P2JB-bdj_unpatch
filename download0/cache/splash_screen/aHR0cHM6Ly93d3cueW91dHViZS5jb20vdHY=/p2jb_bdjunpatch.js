@@ -16,7 +16,7 @@
 
 (async function () {
     try {
-        const p2jb_version = "P2JB 2.4 (Y2JB port) + bdj_unpatch";
+        const p2jb_version = "P2JB 2.5 (Y2JB port) + bdj_unpatch";
 
         const PAGE_SIZE = 0x4000;
 
@@ -2129,6 +2129,17 @@
             return { thr_handle: read64(thr_handle_addr), payloadout };
         }
 
+        function resolve_title_id() {
+            if (typeof TITLE_ID === "string" && TITLE_ID.length > 0) return TITLE_ID;
+            if (typeof get_title_id === "function") {
+                try {
+                    const t = get_title_id();
+                    if (typeof t === "string" && t.length > 0) return t;
+                } catch (_) { }
+            }
+            return null;
+        }
+
         async function stage_load_elf(S) {
             await ulog("stage_elfldr: entered (sandbox-slot elf_run handoff)");
             if (!S.data_base_ok) {
@@ -2138,22 +2149,29 @@
             }
             try {
 
-                const ELFLDR_NAMES = ["elfldr_1320_v5.elf", "elfldr.elf"];
-                const SANDBOX_BASE = "/download0/cache/splash_screen/" +
-                    "aHR0cHM6Ly93d3cueW91dHViZS5jb20vdHY=/";
+                const ELFLDR_NAMES = ["elfldr_1320_v5.elf", "elfldr_1320.elf", "elfldr.elf"];
+                const SANDBOX_BASE = "/download0/cache/splash_screen/aHR0cHM6Ly93d3cueW91dHViZS5jb20vdHY=/";
                 let elf_path = null;
                 outer:
                 for (const slot of ["000", "001", "002"]) {
                     for (const name of ELFLDR_NAMES) {
-                        const p = "/mnt/sandbox/" + TITLE_ID + "_" + slot +
+                        const p = "/mnt/sandbox/" + title_id + "_" + slot +
                             SANDBOX_BASE + name;
                         if (file_exists(p)) { elf_path = p; break outer; }
                     }
                 }
+                for (let u = 0; u < 8 && !elf_path; u++) {
+                    for (const name of ELFLDR_NAMES) {
+                        const p = "/mnt/usb" + u + "/" + name;
+                        if (file_exists(p)) {
+                            elf_path = p; break;
+                        }
+                    }
+                }
                 if (!elf_path) {
                     await ulog("stage_elfldr: no bundled elfldr found in any " +
-                        "Y2JB sandbox slot - skipped");
-                    send_notification("Stage 7\nelfldr not in sandbox\n" +
+                        "Y2JB sandbox slot or USB drive - skipped");
+                    send_notification("Stage 7\nelfldr not in sandbox or USB drive\n" +
                         "(jailbreak still complete)");
                     return;
                 }
@@ -2195,35 +2213,43 @@
         }
 
         async function stage_bdj_unpatch() {
-            const payload_path = "/mnt/sandbox/" + get_title_id() + "_000/download0/cache/splash_screen/aHR0cHM6Ly93d3cueW91dHViZS5jb20vdHY=/bdj_unpatch_1320_v2.elf";
-            const payload_name = "bdj_unpatch_1320_v2.elf";
-
             if (!is_jailbroken()) {
                 fail("elfldr is not running!");
             }
 
-            if (file_exists(payload_path)) {
-                const file_data = await read_file(payload_path);
-                if (!file_data) {
-                    fail("Failed to read bdj_unpatch_v2.elf");
-                }
+            const payload_name = "bdj_unpatch_1320_v2.elf";
+            let payload_path = null;
 
-                await send_network("127.0.0.1", 9021, SOCK_STREAM, file_data);
-                await ulog("\"" + payload_name + "\" sent to elfldr successfully");
-            } else {
+            const title_id = resolve_title_id();
+
+            for (const slot of ["000", "001", "002"]) {
+                const p = "/mnt/sandbox/" + title_id + "_" + slot + "/download0/cache/splash_screen/aHR0cHM6Ly93d3cueW91dHViZS5jb20vdHY=/" + payload_name;
+                if (file_exists(p)) { payload_path = p; break; }
+            }
+
+            if (!payload_path) {
                 fail("\"" + payload_name + "\" not found!");
             }
+
+            const file_data = await read_file(payload_path);
+            if (!file_data) {
+                fail("Failed to read \"" + payload_name + "\"");
+            }
+
+            await send_network("127.0.0.1", 9021, SOCK_STREAM, file_data);
+            await ulog("\"" + payload_name + "\" sent to elfldr successfully");
         }
 
         send_notification(p2jb_version + "\nport by matem6");
 
         {
+            const title_id = resolve_title_id();
             if (typeof ipv6_kernel_rw === "undefined" ||
-                typeof TITLE_ID !== "string" || TITLE_ID.length === 0 ||
+                title_id === null ||
                 typeof file_exists !== "function" ||
                 typeof read_file !== "function") {
                 await ulog("FATAL: Y2JB framework helpers missing " +
-                    "(ipv6_kernel_rw / TITLE_ID / file_exists / read_file)");
+                    "(ipv6_kernel_rw / title_id / file_exists / read_file)");
                 send_notification("p2jb: Y2JB framework helpers missing\n" +
                     "(update y2jb and retry)");
                 return;
@@ -2424,7 +2450,7 @@
         pin_to_core(S.orig_main_core);
         await ulog("restored main thread to core " + S.orig_main_core);
 
-        await ulog("=== p2jb + bdj_unpatch complete ===");
+        // await ulog("=== p2jb + bdj_unpatch complete ===");
 
     } catch (e) {
         try { await log("p2jb FATAL: " + e.message); } catch (_) { }
