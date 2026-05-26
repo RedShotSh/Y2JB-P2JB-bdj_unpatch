@@ -1531,7 +1531,7 @@
         }
 
         async function stage_load_elf(S) {
-            await ulog("stage_elfldr: entered (Y2JB 1.4 aioshellcode handoff)");
+            await ulog("stage_elfldr: entered (Y2JB 1.5 aioshellcode handoff)");
             if (!S.data_base_ok) {
                 await ulog("stage_elfldr: kernel data_base not resolved - skipped");
                 send_notification("Stage 7\nelf loader skipped (no data_base)");
@@ -1540,8 +1540,8 @@
             try {
                 if (typeof load_aioshellcode !== "function") {
                     await ulog("stage_elfldr: load_aioshellcode not in scope - " +
-                        "the PS5 must be running Y2JB >= 1.4");
-                    send_notification("Stage 7\nUpdate the PS5 to Y2JB 1.4\n" +
+                        "the PS5 must be running Y2JB >= 1.5");
+                    send_notification("Stage 7\nUpdate the PS5 to Y2JB 1.5\n" +
                         "(elf loader skipped)");
                     return;
                 }
@@ -1753,16 +1753,16 @@
                 " (jailbreak unaffected, close-KP may still fire)");
         }
 
-        try {
-            S.iov_ws.terminate();
-            S.uio_read_ws.terminate();
-            S.uio_write_ws.terminate();
-            await js_sleep(200);
-            await ulog("post-jb: 12 iov/uio workers terminated (thr_exit)");
-        } catch (e) {
-            await ulog("post-jb: worker terminate failed: " + e.message +
-                " (jailbreak unaffected)");
-        }
+        // try {
+        //     S.iov_ws.terminate();
+        //     S.uio_read_ws.terminate();
+        //     S.uio_write_ws.terminate();
+        //     await js_sleep(200);
+        //     await ulog("post-jb: 12 iov/uio workers terminated (thr_exit)");
+        // } catch (e) {
+        //     await ulog("post-jb: worker terminate failed: " + e.message +
+        //         " (jailbreak unaffected)");
+        // }
 
         try {
             const A = S.ucred_A || 0n;
