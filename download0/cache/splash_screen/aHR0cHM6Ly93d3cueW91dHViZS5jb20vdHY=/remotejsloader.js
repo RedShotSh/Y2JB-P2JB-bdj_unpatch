@@ -1,4 +1,4 @@
-(async function() {
+(async function () {
     const MAXSIZE = 500 * 1024;
 
     const sockaddr_in = malloc(16);
@@ -74,7 +74,7 @@
 
             attempts++;
         }
-        
+
         if (port !== 50000) {
             if (last_sock !== null) {
                 await log("Warning: did not get port 50000 after " + attempts + " attempts; using last assigned port " + last_port);

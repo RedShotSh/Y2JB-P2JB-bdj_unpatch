@@ -1,11 +1,10 @@
-
-let BIN_NAME    = "kexp_2026_05_25.bin";
+let BIN_NAME = "kexp_2026_05_25.bin";
 let ELFLDR_NAME = "elfldr-ps5-0.23.elf";
 
 let elfldr_addr = 0n;
 let elfldr_size = 0n;
 let elfldr_data = null;
-let allproc     = 0n;
+let allproc = 0n;
 let master_pipe = null;
 let victim_pipe = null;
 
@@ -24,10 +23,10 @@ function find_file(filename) {
 }
 
 async function map_shellcode(bin_data) {
-    const size         = BigInt(bin_data.length);
+    const size = BigInt(bin_data.length);
     const aligned_size = (size + BigInt(PAGE_SIZE) - 1n) & ~(BigInt(PAGE_SIZE) - 1n);
 
-    const fd_buf  = malloc(4n);
+    const fd_buf = malloc(4n);
     const exec_fd = syscall(SYSCALL.jitshm_create, 0n, aligned_size, 0x7n);
     if (exec_fd < 0n) {
         throw new Error("jitshm_create failed: " + toHex(exec_fd));
@@ -106,8 +105,8 @@ async function load_bin() {
 
 async function load_aioshellcode(arg_allproc, arg_master_pipe, arg_victim_pipe) {
     check_jailbroken();
-    
-    allproc     = arg_allproc;
+
+    allproc = arg_allproc;
     master_pipe = arg_master_pipe;
     victim_pipe = arg_victim_pipe;
 
